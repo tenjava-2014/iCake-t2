@@ -35,8 +35,7 @@ public class WaitingAction implements TimerAction {
                 }
                 
                 player.teleport(world.getSpawnLocation());
-                
-                player.getInventory().addItem(new ItemStack[] { new ItemStack(Material.LOG, 3) });
+                player.getInventory().addItem(new ItemStack(Material.LOG, 3));
             }
         }
     }

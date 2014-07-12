@@ -12,6 +12,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 import com.tenjava.entries.iCake.t2.TenJava;
 import com.tenjava.entries.iCake.t2.timers.CoreTask;
+import com.tenjava.entries.iCake.t2.utils.Chat;
 
 public class WorldUtils {
 
@@ -29,6 +30,8 @@ public class WorldUtils {
         World world = Bukkit.createWorld(creator);
         world.setAutoSave(false);
         world.setDifficulty(Difficulty.HARD);
+        
+        Chat.broadcast("&e&oCreating world...");
         
         return coreWorld = world;
     }

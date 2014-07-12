@@ -4,10 +4,10 @@ import com.tenjava.entries.iCake.t2.game.timerActions.*;
 
 public enum GameState {
 
-    WAITING(10, "Game starting in %s", "Game starting, good luck!", new WaitingAction()), //60
-    INVINCIBLE(10, "Invincibility is over in %s", "Invincibility has worn off!", new InvincibleAction()), //30
-    STARTED(60, "Game ending in %s", "Game ending!", new StartingAction()), //600
-    ENDING(10, "Switching worlds in %s", "Switching worlds...", new EndingAction()); //30
+    WAITING(10, "&eGame starting in &6%s", "&6Game starting, good luck!", new WaitingAction()), //60
+    INVINCIBLE(10, "&cInvincibility is over in &4%s", "&4Invincibility has worn off!", new InvincibleAction()), //30
+    STARTED(60, "&eGame ending in &6%s", "&6Game ending!", new StartingAction()), //600
+    ENDING(10, "&eSwitching worlds in &6%s", "&6Switching worlds...", new EndingAction()); //30
     
     private int timePerState;
     private String messageToBroadcast, completeMessage;

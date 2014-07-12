@@ -13,6 +13,7 @@ import com.tenjava.entries.iCake.t2.utils.Utils;
 public class CoreTask extends BukkitRunnable {
 
     private Location coreCentral;
+    
     private int tick;
     
     public CoreTask(Location coreCentral) {
