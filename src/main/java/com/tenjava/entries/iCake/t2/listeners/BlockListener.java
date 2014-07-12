@@ -1,6 +1,7 @@
 package com.tenjava.entries.iCake.t2.listeners;
 
-import org.bukkit.*;
+import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,17 +33,13 @@ public class BlockListener implements Listener {
             } else if(block.getType() == Material.GOLD_BLOCK && WorldUtils.getCoreBlocks().contains(block.getLocation())) {
                 WorldUtils.getCoreBlocks().remove(block.getLocation());
                 
-                Chat.broadcast("&6" + player.getName() + " destroyed one of the core blocks! &7(" + WorldUtils.getCoreBlocks().size() + "/4 remain)");
-                
-                for(Location loc : WorldUtils.getCoreBlocks()) {
-                    player.sendMessage(loc.toString());
-                }
-                
                 if(WorldUtils.getCoreBlocks().isEmpty()) {
                     Chat.broadcast("&6The core has been &lfully&r&6 destroyed!");
                     
                     GameState.getCurrentState().doAction();
                     GameLoop.setTime(GameState.getCurrentState().getTimeForState());
+                } else {
+                    Chat.broadcast("&6" + player.getName() + " destroyed one of the core blocks! &7(" + WorldUtils.getCoreBlocks().size() + "/4 remain)");
                 }
             }
         }

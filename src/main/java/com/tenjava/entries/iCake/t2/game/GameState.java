@@ -32,7 +32,7 @@ public enum GameState {
 
     public String getMessageToBroadcast(int curTime) {
         if(curTime % 60 == 0) {
-            return String.format(getRawMessageToBroadcast(), curTime % 60 + (curTime % 60 == 1 ? " minute" : " minutes"));
+            return String.format(getRawMessageToBroadcast(), curTime / 60 + (curTime / 60 == 1 ? " minute" : " minutes"));
         }
 
         return String.format(getRawMessageToBroadcast(), curTime + (curTime == 1 ? " second" : " seconds"));

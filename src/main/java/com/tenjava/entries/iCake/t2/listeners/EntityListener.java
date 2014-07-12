@@ -23,7 +23,7 @@ public class EntityListener implements Listener {
                 Player player = (Player)e.getEntity();
                 User user = UserManager.getUser(player);
 
-                if(GameState.getCurrentState() == GameState.INVINCIBLE) {
+                if(GameState.getCurrentState() != GameState.STARTED) {
                     e.setCancelled(true);
                 } else {
                     user.setPower(user.getPower() - 2);

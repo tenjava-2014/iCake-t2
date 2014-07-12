@@ -1,12 +1,14 @@
 package com.tenjava.entries.iCake.t2.listeners;
 
 import org.bukkit.*;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
 import com.tenjava.entries.iCake.t2.TenJava;
@@ -48,6 +50,7 @@ public class PlayerListener implements Listener {
         player.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
         
         UserManager.delUser(player);
+        e.setQuitMessage(null);
     }
 
     @EventHandler
@@ -56,6 +59,7 @@ public class PlayerListener implements Listener {
         player.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
         
         UserManager.delUser(player);
+        e.setLeaveMessage(null);
     }
 
     @EventHandler
@@ -116,14 +120,21 @@ public class PlayerListener implements Listener {
         
         if(player.getWorld().getName().equalsIgnoreCase(WorldUtils.WORLD_NAME)) {
             player.setHealth(player.getMaxHealth());
-            user.setPower(UserManager.MAX_POWER);
-
-            Location loc = new Location(player.getWorld(), Utils.getRandom().nextBoolean() ? -Utils.getCentral(250, 450) : Utils.getCentral(250, 450), 0, Utils.getRandom().nextBoolean() ? -Utils.getCentral(250, 450) : Utils.getCentral(250, 450));
-            loc.setY(player.getWorld().getHighestBlockYAt(loc) + 2);
-            
             player.setNoDamageTicks(20 * 3);
             player.setFallDistance(-3f);
+            
+            user.setPower(UserManager.MAX_POWER);
+
+            for(ItemStack item : e.getDrops()) {
+                Item droppedItem = (Item)player.getWorld().dropItemNaturally(player.getLocation(), item);
+                droppedItem.setPickupDelay(20);
+            }
+            
+            Location loc = new Location(player.getWorld(), Utils.getRandom().nextBoolean() ? -Utils.getCentral(250, 450) : Utils.getCentral(250, 450), 0, Utils.getRandom().nextBoolean() ? -Utils.getCentral(250, 450) : Utils.getCentral(250, 450));
+            loc.setY(player.getWorld().getHighestBlockYAt(loc) + 2);
             player.teleport(loc);
+            
+            e.getDrops().clear();
         }
     }
     
