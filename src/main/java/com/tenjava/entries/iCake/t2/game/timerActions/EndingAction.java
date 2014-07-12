@@ -6,6 +6,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.tenjava.entries.iCake.t2.TenJava;
 import com.tenjava.entries.iCake.t2.game.WorldUtils;
+import com.tenjava.entries.iCake.t2.managers.UserManager;
 
 public class EndingAction implements TimerAction {
 
@@ -15,6 +16,8 @@ public class EndingAction implements TimerAction {
              
              player.getInventory().clear();
              player.getInventory().setArmorContents(null);
+             
+             UserManager.getUser(player).setPower(UserManager.MAX_POWER);
         }
         
         WorldUtils.removeWorld();

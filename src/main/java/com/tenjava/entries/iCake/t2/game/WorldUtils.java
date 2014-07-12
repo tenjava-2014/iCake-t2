@@ -2,7 +2,6 @@ package com.tenjava.entries.iCake.t2.game;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
 
 import net.minecraft.util.org.apache.commons.io.FileUtils;
 
@@ -13,6 +12,7 @@ import org.bukkit.scheduler.BukkitTask;
 import com.tenjava.entries.iCake.t2.TenJava;
 import com.tenjava.entries.iCake.t2.timers.CoreTask;
 import com.tenjava.entries.iCake.t2.utils.Chat;
+import com.tenjava.entries.iCake.t2.utils.Utils;
 
 public class WorldUtils {
 
@@ -24,14 +24,14 @@ public class WorldUtils {
     public static World getCoreWorld() { return coreWorld; } //LOMBOK WOULD BE GREAT HERE.
     
     public static World createWorld() {
+        Chat.broadcast("&e&oCreating world...");
+        
         WorldCreator creator = new WorldCreator(WORLD_NAME);
         creator.generateStructures(false);
         
         World world = Bukkit.createWorld(creator);
         world.setAutoSave(false);
         world.setDifficulty(Difficulty.HARD);
-        
-        Chat.broadcast("&e&oCreating world...");
         
         return coreWorld = world;
     }
@@ -52,11 +52,15 @@ public class WorldUtils {
             }
         }
         
+        if(coreTask != null) {
+            coreTask.cancel();
+            coreTask = null;
+        }
+        
         coreWorld = null;
         return false;
     }
     
-    @SuppressWarnings("deprecation")
     public static void spawnCore() {
         if(coreTask != null) {
             coreTask.cancel();
@@ -66,43 +70,22 @@ public class WorldUtils {
         for(Player player : coreWorld.getPlayers()) {
             if(player.getGameMode() != GameMode.CREATIVE) {
                 player.playSound(player.getEyeLocation(), Sound.ZOMBIE_WOODBREAK, 2f, -1f);
+                player.playSound(player.getEyeLocation(), Sound.ZOMBIE_INFECT, 2f, -1.5f);
+                player.playSound(player.getEyeLocation(), Sound.ZOMBIE_METAL, 2f, -1f);
             }
         }
         
-        Random rand = new Random();
-        rand.setSeed(System.nanoTime());
-        
-        Location coreCentral = new Location(coreWorld, rand.nextBoolean() ? -getCentral(rand, 50, 150) : getCentral(rand, 50, 150), 150, rand.nextBoolean() ? -getCentral(rand, 50, 150) : getCentral(rand, 50, 150));
+        Location coreCentral = new Location(coreWorld, Utils.getRandom().nextBoolean() ? -getCentral(50, 200) : getCentral(50, 200), 0, Utils.getRandom().nextBoolean() ? -getCentral(50, 200) : getCentral(50, 200));
+        coreCentral.setY(coreWorld.getHighestBlockYAt(coreCentral) + 10);
 
-        int minX = coreCentral.getBlockX() - 3, maxX = coreCentral.getBlockX() + 3;
-        int minY = coreCentral.getBlockY() - 3, maxY = coreCentral.getBlockY() + 3;
-        int minZ = coreCentral.getBlockZ() - 3, maxZ = coreCentral.getBlockZ() + 3;
+        Chat.broadcast("");
+        Chat.broadcast("&9&nThe CORE has spawned! (X:" + coreCentral.getBlockX() + ", Z:" + coreCentral.getBlockZ() + ")");
         
-        for(int x = minX; x <= maxX; x++) {
-            for(int y = minY; y <= maxY; y++) {
-                for(int z = minZ; z <= maxZ; z++) {
-                    rand.setSeed(System.nanoTime());
-                    
-                    Location loc = new Location(coreCentral.getWorld(), x, y, z);
-                    loc.getBlock().setTypeIdAndData(Material.WOOL.getId(), (byte)rand.nextInt(15), false);
-                }
-            }
-        }
-        
-        Bukkit.broadcastMessage(coreCentral.toString());
         coreTask = new CoreTask(coreCentral).runTaskTimer(TenJava.getInstance(), 20 * 5, 1);
     }
     
-    private static int getCentral(Random rand, int low, int high) {
-        return rand.nextInt(high - low) + low;
-    }
-    
-    public synchronized void initALEX(boolean fourtwentytea) {
-        while(true) {
-            try {
-                Thread.sleep(fourtwentytea ? 420 : 500);
-            } catch(Exception e) { }
-        }
+    private static int getCentral(int low, int high) {
+        return Utils.getRandom().nextInt(high - low) + low;
     }
     
 }

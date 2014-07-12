@@ -3,6 +3,7 @@ package com.tenjava.entries.iCake.t2.timers;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.tenjava.entries.iCake.t2.game.GameState;
 import com.tenjava.entries.iCake.t2.game.WorldUtils;
 import com.tenjava.entries.iCake.t2.managers.UserManager;
 import com.tenjava.entries.iCake.t2.utils.Chat;
@@ -16,7 +17,7 @@ public class BorderTask extends BukkitRunnable {
     }
     
     public void run() {
-        if(player.getLocation().getWorld().getName().equals(WorldUtils.WORLD_NAME)) {
+        if(GameState.getCurrentState() != GameState.STARTED && player.getLocation().getWorld().getName().equals(WorldUtils.WORLD_NAME)) {
             int x = Math.abs(player.getLocation().getBlockX()), z = Math.abs(player.getLocation().getBlockZ());
             
             if(x >= 500 || z >= 500) {
