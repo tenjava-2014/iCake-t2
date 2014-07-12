@@ -30,6 +30,8 @@ public class BlockListener implements Listener {
         
         if(player.getGameMode() != GameMode.CREATIVE) {
             if(GameState.getCurrentState() != GameState.STARTED) {
+                Chat.sendMessage(player, "&7&oYou cannot break blocks during this time!");
+                
                 e.setCancelled(true);
             } else if(block.getType() == Material.GOLD_BLOCK && WorldUtils.getCoreBlocks().contains(block.getLocation())) {
                 WorldUtils.getCoreBlocks().remove(block.getLocation());
@@ -53,6 +55,8 @@ public class BlockListener implements Listener {
         Player player = e.getPlayer();
 
         if(player.getGameMode() != GameMode.CREATIVE && GameState.getCurrentState() != GameState.STARTED) {
+            Chat.sendMessage(player, "&7&oYou cannot place blocks during this time!");
+            
             e.setCancelled(true);
         }
     }
@@ -63,6 +67,8 @@ public class BlockListener implements Listener {
             Player player = (Player)e.getRemover();
 
             if(player.getGameMode() != GameMode.CREATIVE && GameState.getCurrentState() != GameState.STARTED) {
+                Chat.sendMessage(player, "&7&oYou cannot break frames during this time!");
+                
                 e.setCancelled(true);
             }
         }
@@ -74,6 +80,8 @@ public class BlockListener implements Listener {
             Player player = (Player)e.getEntity();
 
             if(player.getGameMode() != GameMode.CREATIVE && GameState.getCurrentState() != GameState.STARTED) {
+                Chat.sendMessage(player, "&7&oYou cannot place frames during this time!");
+                
                 e.setCancelled(true);
             }
         }

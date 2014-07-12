@@ -38,9 +38,12 @@ public class WaitingAction implements TimerAction {
                 player.teleport(world.getSpawnLocation());
                 player.getInventory().addItem(new ItemStack[] { new ItemStack(Material.LOG, 3), new ItemStack(Material.BED) });
                 
-                TenJava.getBoard().setScoreboard(player, true);
+                TenJava.getBoard().setScoreboard(player, false);
             }
         }
+    
+        TenJava.getBoard().updateCores();
+        TenJava.getBoard().updatePlayers();
     }
 
 }
