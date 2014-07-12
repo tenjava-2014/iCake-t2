@@ -33,6 +33,8 @@ public class BorderTask extends BukkitRunnable {
     public void stop() {
         this.cancel();
         UserManager.getUser(player).setBorderTask(null);
+        
+        Chat.sendMessage(player, "&aNICE. THANK YOU.");
     }
 
 }
