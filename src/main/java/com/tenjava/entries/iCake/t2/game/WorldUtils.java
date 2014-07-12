@@ -2,6 +2,7 @@ package com.tenjava.entries.iCake.t2.game;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import net.minecraft.util.org.apache.commons.io.FileUtils;
 
@@ -20,9 +21,14 @@ public class WorldUtils {
     private static World coreWorld;
 
     private static BukkitTask coreTask;
+    private static ArrayList<Location> coreBlocks = new ArrayList<Location>();
 
     public static World getCoreWorld() {
         return coreWorld;
+    }
+
+    public static ArrayList<Location> getCoreBlocks() {
+        return coreBlocks;
     }
 
     public static World createWorld() {
@@ -77,17 +83,23 @@ public class WorldUtils {
             }
         }
 
-        Location coreCentral = new Location(coreWorld, Utils.getRandom().nextBoolean() ? -getCentral(50, 200) : getCentral(50, 200), 0, Utils.getRandom().nextBoolean() ? -getCentral(50, 200) : getCentral(50, 200));
+        Location coreCentral = new Location(coreWorld, Utils.getRandom().nextBoolean() ? -Utils.getCentral(50, 200) : Utils.getCentral(50, 200), 0, Utils.getRandom().nextBoolean() ? -Utils.getCentral(50, 200) : Utils.getCentral(50, 200));
         coreCentral.setY(coreWorld.getHighestBlockYAt(coreCentral) + 10);
+        coreCentral.getBlock().setType(Material.GOLD_BLOCK);
+        
+        for(int i = 0; i <= 3; i++) {
+            Location loc = coreCentral.clone().add(0, i, 0);
+            
+            if(!coreBlocks.contains(loc)) {
+                loc.getBlock().setType(Material.GOLD_BLOCK);
+                coreBlocks.add(loc);
+            }
+        }
 
-        Chat.broadcast("");
         Chat.broadcast("&9&nThe CORE has spawned! (X:" + coreCentral.getBlockX() + ", Z:" + coreCentral.getBlockZ() + ")");
+        Chat.broadcast("");
 
         coreTask = new CoreTask(coreCentral).runTaskTimer(TenJava.getInstance(), 20 * 5, 1);
-    }
-
-    private static int getCentral(int low, int high) {
-        return Utils.getRandom().nextInt(high - low) + low;
     }
 
 }

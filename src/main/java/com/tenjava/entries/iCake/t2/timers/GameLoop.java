@@ -8,7 +8,7 @@ import com.tenjava.entries.iCake.t2.utils.Chat;
 
 public class GameLoop extends BukkitRunnable {
 
-    private int time;
+    private static int time;
 
     public GameLoop() {
         time = GameState.getCurrentState().getTimeForState();
@@ -29,6 +29,10 @@ public class GameLoop extends BukkitRunnable {
         }
 
         time--;
+    }
+    
+    public static void setTime(int newtime) {
+        time = newtime;
     }
 
 }

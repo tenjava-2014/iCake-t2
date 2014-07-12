@@ -1,10 +1,11 @@
 package com.tenjava.entries.iCake.t2.listeners;
 
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.potion.PotionEffect;
 
@@ -16,6 +17,7 @@ import com.tenjava.entries.iCake.t2.managers.UserManager;
 import com.tenjava.entries.iCake.t2.power.PowerFoods;
 import com.tenjava.entries.iCake.t2.timers.BorderTask;
 import com.tenjava.entries.iCake.t2.utils.Chat;
+import com.tenjava.entries.iCake.t2.utils.Utils;
 
 public class PlayerListener implements Listener {
 
@@ -23,6 +25,10 @@ public class PlayerListener implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
 
+        if(GameState.getCurrentState() == GameState.WAITING) {
+            player.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
+        }
+        
         player.getInventory().clear();
         player.getInventory().setArmorContents(null);
         player.setHealth(player.getMaxHealth());
@@ -32,17 +38,24 @@ public class PlayerListener implements Listener {
             player.removePotionEffect(pot.getType());
         }
 
-        UserManager.getUser(e.getPlayer());
+        UserManager.getUser(player);
+        e.setJoinMessage(null);
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
-        UserManager.delUser(e.getPlayer());
+        Player player = e.getPlayer();
+        player.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
+        
+        UserManager.delUser(player);
     }
 
     @EventHandler
     public void onKick(PlayerKickEvent e) {
-        UserManager.delUser(e.getPlayer());
+        Player player = e.getPlayer();
+        player.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
+        
+        UserManager.delUser(player);
     }
 
     @EventHandler
@@ -93,6 +106,24 @@ public class PlayerListener implements Listener {
             }
             
             e.setCancelled(true);
+        }
+    }
+    
+    @EventHandler
+    public void onDeath(PlayerDeathEvent e) {
+        Player player = e.getEntity();
+        User user = UserManager.getUser(player);
+        
+        if(player.getWorld().getName().equalsIgnoreCase(WorldUtils.WORLD_NAME)) {
+            player.setHealth(player.getMaxHealth());
+            user.setPower(UserManager.MAX_POWER);
+
+            Location loc = new Location(player.getWorld(), Utils.getRandom().nextBoolean() ? -Utils.getCentral(250, 450) : Utils.getCentral(250, 450), 0, Utils.getRandom().nextBoolean() ? -Utils.getCentral(250, 450) : Utils.getCentral(250, 450));
+            loc.setY(player.getWorld().getHighestBlockYAt(loc) + 2);
+            
+            player.setNoDamageTicks(20 * 3);
+            player.setFallDistance(-3f);
+            player.teleport(loc);
         }
     }
     

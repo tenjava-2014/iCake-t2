@@ -8,6 +8,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import com.tenjava.entries.iCake.t2.TenJava;
+import com.tenjava.entries.iCake.t2.game.WorldUtils;
 import com.tenjava.entries.iCake.t2.utils.Utils;
 
 public class CoreTask extends BukkitRunnable {
@@ -27,13 +28,15 @@ public class CoreTask extends BukkitRunnable {
         if(tick == -1 || tick % 15 == 0) {
             int[] blockDataS = new int[] { 15, 14, 1, 4 };
 
-            for(int loop = 0; loop < Utils.getRandom().nextInt(3); loop++) {
-                for(int i = 0; i < blockDataS.length; i++) {
-                    @SuppressWarnings("deprecation")
-                    FallingBlock block = coreCentral.getWorld().spawnFallingBlock(coreCentral, Material.WOOL, (byte)blockDataS[i]);
-                    block.setVelocity(getRandomVector());
-                    block.setMetadata("core", new FixedMetadataValue(TenJava.getInstance(), true));
-                    block.setDropItem(false);
+            if(!WorldUtils.getCoreBlocks().isEmpty()) {
+                for(int loop = 0; loop < Utils.getRandom().nextInt(WorldUtils.getCoreBlocks().size()); loop++) {
+                    for(int i = 0; i < blockDataS.length; i++) {
+                        @SuppressWarnings("deprecation")
+                        FallingBlock block = coreCentral.getWorld().spawnFallingBlock(coreCentral, Material.WOOL, (byte)blockDataS[i]);
+                        block.setVelocity(getRandomVector());
+                        block.setMetadata("core", new FixedMetadataValue(TenJava.getInstance(), true));
+                        block.setDropItem(false);
+                    }
                 }
             }
         }

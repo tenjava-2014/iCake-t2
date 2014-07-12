@@ -10,5 +10,9 @@ public class Utils {
         rand.setSeed(System.nanoTime());
         return rand;
     }
+    
+    public static int getCentral(int low, int high) {
+        return getRandom().nextInt(high - low) + low;
+    }
 
 }
