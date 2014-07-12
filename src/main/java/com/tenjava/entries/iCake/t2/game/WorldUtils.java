@@ -39,7 +39,7 @@ public class WorldUtils {
         
         if(world != null) {
             final File folder = world.getWorldFolder();
-            Bukkit.unloadWorld(world, false);
+            Bukkit.unloadWorld(world, true);
             
             try {
                 FileUtils.deleteDirectory(folder);
@@ -50,6 +50,7 @@ public class WorldUtils {
             }
         }
         
+        coreWorld = null;
         return false;
     }
     

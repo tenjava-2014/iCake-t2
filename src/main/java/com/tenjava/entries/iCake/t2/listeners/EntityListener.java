@@ -2,6 +2,7 @@ package com.tenjava.entries.iCake.t2.listeners;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,7 +28,7 @@ public class EntityListener implements Listener {
         
         if(entity.hasMetadata("core")) {
             e.setCancelled(true);
-            block.setType(Material.LAVA);
+            block.setType(block.getRelative(BlockFace.DOWN).getType() == Material.WOOL ? Material.AIR : Material.LAVA);
         }
     }
     

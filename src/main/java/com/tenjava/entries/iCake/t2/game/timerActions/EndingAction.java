@@ -2,7 +2,9 @@ package com.tenjava.entries.iCake.t2.game.timerActions;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import com.tenjava.entries.iCake.t2.TenJava;
 import com.tenjava.entries.iCake.t2.game.WorldUtils;
 
 public class EndingAction implements TimerAction {
@@ -16,6 +18,12 @@ public class EndingAction implements TimerAction {
         }
         
         WorldUtils.removeWorld();
+        
+        new BukkitRunnable() {
+            public void run() {
+                WorldUtils.createWorld();
+            }
+        }.runTaskLater(TenJava.getInstance(), 20 * 3);
     }
 
 }
