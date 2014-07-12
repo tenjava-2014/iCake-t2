@@ -10,7 +10,7 @@ import com.tenjava.entries.iCake.t2.game.WorldUtils;
 public class WaitingAction implements TimerAction {
 
     public void doAction() {
-        World world = WorldUtils.createWorld();
+        World world = WorldUtils.getCoreWorld();
         world.setSpawnLocation(0, 150, 0);
         
         for(Player player : Bukkit.getOnlinePlayers()) {

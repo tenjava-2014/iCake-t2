@@ -1,13 +1,13 @@
 package com.tenjava.entries.iCake.t2.game;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.Random;
 
 import net.minecraft.util.org.apache.commons.io.FileUtils;
 
 import org.bukkit.*;
 import org.bukkit.entity.Player;
-import org.bukkit.material.Wool;
 import org.bukkit.scheduler.BukkitTask;
 
 import com.tenjava.entries.iCake.t2.TenJava;
@@ -19,6 +19,8 @@ public class WorldUtils {
     private static World coreWorld;
     
     private static BukkitTask coreTask;
+    
+    public static World getCoreWorld() { return coreWorld; } //LOMBOK WOULD BE GREAT HERE.
     
     public static World createWorld() {
         WorldCreator creator = new WorldCreator(WORLD_NAME);
@@ -36,20 +38,22 @@ public class WorldUtils {
         World world = Bukkit.getWorld(WORLD_NAME);
         
         if(world != null) {
+            final File folder = world.getWorldFolder();
+            Bukkit.unloadWorld(world, false);
+            
             try {
-                FileUtils.deleteDirectory(world.getWorldFolder());
+                FileUtils.deleteDirectory(folder);
             } catch(IOException e) {
                 Bukkit.getLogger().severe("FAILED TO DELETE WORLD. HELL WILL BURN DOWN ON THIS WORLD.");
                 e.printStackTrace();
                 Bukkit.getLogger().severe("----------[ error has end ] ---------------------");
             }
-            
-            Bukkit.unloadWorld(WORLD_NAME, false);
         }
         
         return false;
     }
     
+    @SuppressWarnings("deprecation")
     public static void spawnCore() {
         if(coreTask != null) {
             coreTask.cancel();
@@ -65,19 +69,19 @@ public class WorldUtils {
         Random rand = new Random();
         rand.setSeed(System.nanoTime());
         
-        ArrayList<DyeColor> colors = new ArrayList<DyeColor>(Arrays.asList(DyeColor.values()));
         Location coreCentral = new Location(coreWorld, rand.nextBoolean() ? -getCentral(rand, 50, 150) : getCentral(rand, 50, 150), 150, rand.nextBoolean() ? -getCentral(rand, 50, 150) : getCentral(rand, 50, 150));
 
-        for(int x = coreCentral.getBlockX() - 3; x >= coreCentral.getBlockX() + 3; x++) {
-            for(int y = coreCentral.getBlockY() - 3; y >= coreCentral.getBlockY() + 3; y++) {
-                for(int z = coreCentral.getBlockZ() - 3; z >= coreCentral.getBlockZ() + 3; z++) {
-                    Location loc = new Location(coreCentral.getWorld(), x, y, z);
-                    loc.getBlock().setType(Material.WOOL);
-                    
+        int minX = coreCentral.getBlockX() - 3, maxX = coreCentral.getBlockX() + 3;
+        int minY = coreCentral.getBlockY() - 3, maxY = coreCentral.getBlockY() + 3;
+        int minZ = coreCentral.getBlockZ() - 3, maxZ = coreCentral.getBlockZ() + 3;
+        
+        for(int x = minX; x <= maxX; x++) {
+            for(int y = minY; y <= maxY; y++) {
+                for(int z = minZ; z <= maxZ; z++) {
                     rand.setSeed(System.nanoTime());
                     
-                    Wool wool = (Wool)loc.getBlock().getState();
-                    wool.setColor(colors.get(rand.nextInt(colors.size())));
+                    Location loc = new Location(coreCentral.getWorld(), x, y, z);
+                    loc.getBlock().setTypeIdAndData(Material.WOOL.getId(), (byte)rand.nextInt(15), false);
                 }
             }
         }
