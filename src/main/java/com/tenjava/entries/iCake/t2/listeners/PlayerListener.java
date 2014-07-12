@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.event.player.PlayerLoginEvent.Result;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
@@ -23,6 +24,15 @@ import com.tenjava.entries.iCake.t2.utils.Utils;
 
 public class PlayerListener implements Listener {
 
+    @EventHandler
+    public void onLogin(PlayerLoginEvent e) {
+        Player player = e.getPlayer();
+        
+        if(e.getResult() == Result.ALLOWED && GameState.getCurrentState() != GameState.WAITING && !player.isOp()) {
+           e.disallow(Result.KICK_OTHER, Chat.color("&cGame currently in progress, join back later!"));
+        }
+    }
+    
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
@@ -40,7 +50,9 @@ public class PlayerListener implements Listener {
             player.removePotionEffect(pot.getType());
         }
 
+        TenJava.getBoard().delScoreboard(player);
         UserManager.getUser(player);
+
         e.setJoinMessage(null);
     }
 
@@ -49,7 +61,9 @@ public class PlayerListener implements Listener {
         Player player = e.getPlayer();
         player.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
         
+        TenJava.getBoard().delScoreboard(player);
         UserManager.delUser(player);
+        
         e.setQuitMessage(null);
     }
 
@@ -58,7 +72,9 @@ public class PlayerListener implements Listener {
         Player player = e.getPlayer();
         player.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
         
+        TenJava.getBoard().delScoreboard(player);
         UserManager.delUser(player);
+
         e.setLeaveMessage(null);
     }
 

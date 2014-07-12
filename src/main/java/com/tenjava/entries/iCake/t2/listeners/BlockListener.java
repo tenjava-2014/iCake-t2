@@ -10,6 +10,7 @@ import org.bukkit.event.block.*;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.hanging.HangingPlaceEvent;
 
+import com.tenjava.entries.iCake.t2.TenJava;
 import com.tenjava.entries.iCake.t2.game.GameState;
 import com.tenjava.entries.iCake.t2.game.WorldUtils;
 import com.tenjava.entries.iCake.t2.timers.GameLoop;
@@ -41,6 +42,8 @@ public class BlockListener implements Listener {
                 } else {
                     Chat.broadcast("&6" + player.getName() + " destroyed one of the core blocks! &7(" + WorldUtils.getCoreBlocks().size() + "/4 remain)");
                 }
+                
+                TenJava.getBoard().updateCores();
             }
         }
     }

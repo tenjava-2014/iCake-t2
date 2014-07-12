@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
+import com.tenjava.entries.iCake.t2.TenJava;
 import com.tenjava.entries.iCake.t2.game.WorldUtils;
 
 public class WaitingAction implements TimerAction {
@@ -36,6 +37,8 @@ public class WaitingAction implements TimerAction {
 
                 player.teleport(world.getSpawnLocation());
                 player.getInventory().addItem(new ItemStack[] { new ItemStack(Material.LOG, 3), new ItemStack(Material.BED) });
+                
+                TenJava.getBoard().setScoreboard(player, true);
             }
         }
     }

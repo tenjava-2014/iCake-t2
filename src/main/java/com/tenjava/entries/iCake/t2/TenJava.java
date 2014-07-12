@@ -8,14 +8,17 @@ import org.bukkit.potion.PotionEffect;
 import com.tenjava.entries.iCake.t2.game.WorldUtils;
 import com.tenjava.entries.iCake.t2.listeners.*;
 import com.tenjava.entries.iCake.t2.timers.GameLoop;
+import com.tenjava.entries.iCake.t2.utils.Board;
 import com.tenjava.entries.iCake.t2.utils.Chat;
 
 public class TenJava extends JavaPlugin {
 
     private static TenJava instance;
+    private static Board board;
 
     public void onEnable() {
         instance = this;
+        board = new Board();
 
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
         Bukkit.getPluginManager().registerEvents(new EntityListener(), this);
@@ -47,6 +50,10 @@ public class TenJava extends JavaPlugin {
 
     public static TenJava getInstance() {
         return instance;
+    }
+    
+    public static Board getBoard() {
+        return board;
     }
 
 }

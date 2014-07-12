@@ -1,5 +1,6 @@
 package com.tenjava.entries.iCake.t2.game.timerActions;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
@@ -31,6 +32,8 @@ public class StartingAction implements TimerAction {
                 user.getPowerTask().cancel();
                 user.setPowerTask(null);
             }
+            
+            player.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
         }
     }
 
