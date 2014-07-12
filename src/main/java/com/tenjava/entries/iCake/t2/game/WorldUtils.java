@@ -25,7 +25,6 @@ public class WorldUtils {
     public static World createWorld() {
         WorldCreator creator = new WorldCreator(WORLD_NAME);
         creator.generateStructures(false);
-        creator.type(WorldType.AMPLIFIED);
         
         World world = Bukkit.createWorld(creator);
         world.setAutoSave(false);

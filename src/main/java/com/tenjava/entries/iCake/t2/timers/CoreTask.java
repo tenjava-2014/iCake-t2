@@ -30,14 +30,35 @@ public class CoreTask extends BukkitRunnable {
             for(int loop = 0; loop < 3; loop++) {
                 for(int i = 0; i < blockDataS.length; i++) {
                     @SuppressWarnings("deprecation") FallingBlock block = coreCentral.getWorld().spawnFallingBlock(coreCentral, Material.WOOL, (byte)blockDataS[i]);
-                    block.setVelocity(Vector.getRandom().multiply(Utils.getRandom().nextBoolean() ? -2 : 2));
+                    block.setVelocity(getRandomVector());
                     block.setMetadata("core", new FixedMetadataValue(TenJava.getInstance(), true));
                     block.setDropItem(false);
+                }
+            }
+            
+            if(Utils.getRandom().nextInt(10) == 2) {
+                for(int loop = 0; loop < 2; loop++) {
+                    for(int i = 0; i < 3; i++) {
+                        @SuppressWarnings("deprecation") FallingBlock block = coreCentral.getWorld().spawnFallingBlock(coreCentral, Material.TNT, (byte)0);
+                        block.setVelocity(getRandomVector().multiply(3));
+                        block.setMetadata("core-tnt", new FixedMetadataValue(TenJava.getInstance(), true));
+                        block.setDropItem(false);
+                    }
                 }
             }
         }
         
         tick++;
+    }
+    
+    public Vector getRandomVector() {
+        Vector vector = new Vector();
+
+        double x = Utils.getRandom().nextBoolean() ? -Utils.getRandom().nextDouble() : Utils.getRandom().nextDouble();
+        double y = (Utils.getRandom().nextDouble() + Math.random()) * 1.4;
+        double z = Utils.getRandom().nextBoolean() ? -Utils.getRandom().nextDouble() : Utils.getRandom().nextDouble();
+        
+        return vector.setX(x).setY(y).setZ(z);
     }
 
 }

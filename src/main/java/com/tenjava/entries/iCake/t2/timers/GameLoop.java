@@ -22,7 +22,7 @@ public class GameLoop extends BukkitRunnable {
         } else if(time <= 5 && time >= 1) {
             Bukkit.broadcastMessage(Chat.color(GameState.getCurrentState().getMessageToBroadcast(time)));
         } else if(time == 0) {
-            Bukkit.broadcastMessage(Chat.color(GameState.getCurrentState().getMessageToBroadcast(time)));
+            Bukkit.broadcastMessage(Chat.color(GameState.getCurrentState().getCompleteMessage()));
             
             GameState.getCurrentState().doAction();
             time = GameState.getCurrentState().getTimeForState();
