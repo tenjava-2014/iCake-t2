@@ -22,14 +22,27 @@ public enum GameState {
         this.action = action;
     }
 
+    /**
+     * Get the time that remains for the state of the game
+     * @return the time for each state
+     */
     public int getTimeForState() {
         return timePerState;
     }
 
+    /**
+     * Get raw message to broadcast, with no formatting
+     * @return raw message
+     */
     public String getRawMessageToBroadcast() {
         return messageToBroadcast;
     }
 
+    /**
+     * Gets the message to broadcast, with the time included
+     * @param curTime the currrent time in GameLoop
+     * @return formatted message
+     */
     public String getMessageToBroadcast(int curTime) {
         if(curTime % 60 == 0) {
             return String.format(getRawMessageToBroadcast(), curTime / 60 + (curTime / 60 == 1 ? " minute" : " minutes"));
@@ -38,10 +51,16 @@ public enum GameState {
         return String.format(getRawMessageToBroadcast(), curTime + (curTime == 1 ? " second" : " seconds"));
     }
 
+    /**
+     * @return the message when timer ends
+     */
     public String getCompleteMessage() {
         return completeMessage;
     }
 
+    /**
+     * @return the current game state
+     */
     public static GameState getCurrentState() {
         if(currentState == null) {
             setCurrentState(WAITING);
@@ -50,6 +69,10 @@ public enum GameState {
         return currentState;
     }
 
+    /**
+     * Set the current state
+     * @param state
+     */
     public static void setCurrentState(GameState state) {
         currentState = state;
     }

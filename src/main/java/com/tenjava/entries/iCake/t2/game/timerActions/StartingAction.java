@@ -10,6 +10,9 @@ import com.tenjava.entries.iCake.t2.managers.UserManager;
 
 public class StartingAction implements TimerAction {
 
+    /**
+     * Called when the game is just about to end
+     */
     public void doAction() {
         for(Player player : WorldUtils.getCoreWorld().getPlayers()) {
             player.setVelocity(new Vector(0, .3, 0));

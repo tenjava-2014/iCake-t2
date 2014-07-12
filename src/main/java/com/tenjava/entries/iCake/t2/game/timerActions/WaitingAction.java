@@ -10,6 +10,9 @@ import com.tenjava.entries.iCake.t2.game.WorldUtils;
 
 public class WaitingAction implements TimerAction {
 
+    /**
+     * Called when the game starts
+     */
     public void doAction() {
         World world = WorldUtils.getCoreWorld();
         world.setSpawnLocation(0, world.getHighestBlockYAt(world.getSpawnLocation()) + 2, 0);

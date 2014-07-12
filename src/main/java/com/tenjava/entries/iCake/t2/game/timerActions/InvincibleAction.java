@@ -12,6 +12,9 @@ import com.tenjava.entries.iCake.t2.timers.PowerTask;
 
 public class InvincibleAction implements TimerAction {
 
+    /**
+     * Is called when the 'INVINCIBLE' time ends
+     */
     public void doAction() {
         for(Player player : WorldUtils.getCoreWorld().getPlayers()) {
             User user = UserManager.getUser(player);

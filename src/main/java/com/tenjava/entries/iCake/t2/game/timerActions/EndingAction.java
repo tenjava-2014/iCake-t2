@@ -10,6 +10,9 @@ import com.tenjava.entries.iCake.t2.managers.UserManager;
 
 public class EndingAction implements TimerAction {
 
+    /**
+     * Is called when the game reaches the end of the 'ENDING' period
+     */
     public void doAction() {
         for(Player player : WorldUtils.getCoreWorld().getPlayers()) {
             player.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
