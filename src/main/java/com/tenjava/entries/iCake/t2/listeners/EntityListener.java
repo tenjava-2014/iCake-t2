@@ -6,10 +6,9 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.EntityBlockFormEvent;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
-import com.tenjava.entries.iCake.t2.TenJava;
 import com.tenjava.entries.iCake.t2.game.GameState;
 
 public class EntityListener implements Listener {
@@ -22,15 +21,13 @@ public class EntityListener implements Listener {
     }
     
     @EventHandler
-    public void onEntityBlockForm(EntityBlockFormEvent e) {
+    public void onEntityBlockForm(EntityChangeBlockEvent e) {
         Entity entity = e.getEntity();
         Block block = e.getBlock();
         
         if(entity.hasMetadata("core")) {
             e.setCancelled(true);
             block.setType(Material.LAVA);
-            
-            entity.removeMetadata("core", TenJava.getInstance());
         }
     }
     

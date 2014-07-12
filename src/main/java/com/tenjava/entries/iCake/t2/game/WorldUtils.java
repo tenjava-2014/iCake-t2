@@ -58,7 +58,7 @@ public class WorldUtils {
 
         for(Player player : coreWorld.getPlayers()) {
             if(player.getGameMode() != GameMode.CREATIVE) {
-                player.playSound(player.getEyeLocation(), Sound.ZOMBIE_WOODBREAK, 1f, -1f);
+                player.playSound(player.getEyeLocation(), Sound.ZOMBIE_WOODBREAK, 2f, -1f);
             }
         }
         
@@ -82,6 +82,7 @@ public class WorldUtils {
             }
         }
         
+        Bukkit.broadcastMessage(coreCentral.toString());
         coreTask = new CoreTask(coreCentral).runTaskTimer(TenJava.getInstance(), 20 * 5, 1);
     }
     

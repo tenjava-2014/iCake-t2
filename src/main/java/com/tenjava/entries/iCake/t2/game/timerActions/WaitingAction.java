@@ -11,12 +11,7 @@ public class WaitingAction implements TimerAction {
 
     public void doAction() {
         World world = WorldUtils.createWorld();
-        world.setSpawnLocation(0, 0, 0);
-        
-        Location loc = world.getSpawnLocation();
-        loc.setY(loc.getWorld().getHighestBlockYAt(loc) + 2);
-
-        world.setSpawnLocation(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
+        world.setSpawnLocation(0, 150, 0);
         
         for(Player player : Bukkit.getOnlinePlayers()) {
             if(player.getGameMode() != GameMode.CREATIVE) {

@@ -10,6 +10,10 @@ public class GameLoop extends BukkitRunnable {
 
     private int time;
     
+    public GameLoop() {
+        time = GameState.getCurrentState().getTimeForState();
+    }
+    
     public void run() {
         if(time % 60 == 0 && time >= 60) {
             Bukkit.broadcastMessage(Chat.color(GameState.getCurrentState().getMessageToBroadcast(time)));
