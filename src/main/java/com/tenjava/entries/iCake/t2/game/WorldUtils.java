@@ -1,12 +1,13 @@
 package com.tenjava.entries.iCake.t2.game;
 
 import java.io.IOException;
-import java.util.Random;
+import java.util.*;
 
 import net.minecraft.util.org.apache.commons.io.FileUtils;
 
 import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.material.Wool;
 import org.bukkit.scheduler.BukkitTask;
 
 import com.tenjava.entries.iCake.t2.TenJava;
@@ -62,11 +63,26 @@ public class WorldUtils {
         }
         
         Random rand = new Random();
+        rand.setSeed(System.nanoTime());
         
+        ArrayList<DyeColor> colors = new ArrayList<DyeColor>(Arrays.asList(DyeColor.values()));
         Location coreCentral = new Location(coreWorld, rand.nextBoolean() ? -getCentral(rand, 50, 150) : getCentral(rand, 50, 150), 150, rand.nextBoolean() ? -getCentral(rand, 50, 150) : getCentral(rand, 50, 150));
-        coreCentral.getBlock();
+
+        for(int x = coreCentral.getBlockX() - 3; x >= coreCentral.getBlockX() + 3; x++) {
+            for(int y = coreCentral.getBlockY() - 3; y >= coreCentral.getBlockY() + 3; y++) {
+                for(int z = coreCentral.getBlockZ() - 3; z >= coreCentral.getBlockZ() + 3; z++) {
+                    Location loc = new Location(coreCentral.getWorld(), x, y, z);
+                    loc.getBlock().setType(Material.WOOL);
+                    
+                    rand.setSeed(System.nanoTime());
+                    
+                    Wool wool = (Wool)loc.getBlock().getState();
+                    wool.setColor(colors.get(rand.nextInt(colors.size())));
+                }
+            }
+        }
         
-        coreTask = new CoreTask().runTaskTimer(TenJava.getInstance(), 20 * 5, 10);
+        coreTask = new CoreTask(coreCentral).runTaskTimer(TenJava.getInstance(), 20 * 5, 1);
     }
     
     private static int getCentral(Random rand, int low, int high) {

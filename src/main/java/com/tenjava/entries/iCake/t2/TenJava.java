@@ -3,7 +3,7 @@ package com.tenjava.entries.iCake.t2;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.tenjava.entries.iCake.t2.listeners.PlayerListener;
+import com.tenjava.entries.iCake.t2.listeners.*;
 
 public class TenJava extends JavaPlugin {
 
@@ -23,6 +23,8 @@ public class TenJava extends JavaPlugin {
         instance = this;
         
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
+        Bukkit.getPluginManager().registerEvents(new EntityListener(), this);
+        Bukkit.getPluginManager().registerEvents(new BlockListener(), this);
     }
 
     public void onDisable() {
