@@ -18,15 +18,19 @@ public class EntityListener implements Listener {
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent e) {
-        if(e.getEntity() instanceof Player && e.getEntity().getWorld().getName().equalsIgnoreCase(WorldUtils.WORLD_NAME)) {
-            Player player = (Player)e.getEntity();
-            User user = UserManager.getUser(player);
-            
-            if(GameState.getCurrentState() == GameState.INVINCIBLE) {
-                e.setCancelled(true);
-            } else {
-                user.setPower(user.getPower() - 2);
+        if(e.getEntity().getWorld().getName().equalsIgnoreCase(WorldUtils.WORLD_NAME)) {
+            if(e.getEntity() instanceof Player) {
+                Player player = (Player)e.getEntity();
+                User user = UserManager.getUser(player);
+
+                if(GameState.getCurrentState() == GameState.INVINCIBLE) {
+                    e.setCancelled(true);
+                } else {
+                    user.setPower(user.getPower() - 2);
+                }
             }
+        } else {
+            e.setCancelled(true);
         }
     }
 

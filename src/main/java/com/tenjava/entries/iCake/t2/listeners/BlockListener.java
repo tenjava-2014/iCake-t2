@@ -45,7 +45,7 @@ public class BlockListener implements Listener {
             }
         }
     }
-    
+
     @EventHandler
     public void onPlace(HangingPlaceEvent e) {
         if(e.getEntity() instanceof Player) {

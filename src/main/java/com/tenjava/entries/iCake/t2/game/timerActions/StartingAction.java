@@ -14,14 +14,14 @@ public class StartingAction implements TimerAction {
             player.setVelocity(new Vector(0, .3, 0));
             player.setAllowFlight(true);
             player.setFlying(true);
-            
+
             User user = UserManager.getUser(player);
-            
+
             if(user.getBorderTask() != null) {
                 user.getBorderTask().cancel();
                 user.setBorderTask(null);
             }
-            
+
             if(user.getNoPowerTask() != null) {
                 user.getNoPowerTask().cancel();
                 user.setNoPowerTask(null);

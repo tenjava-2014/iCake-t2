@@ -12,27 +12,27 @@ import com.tenjava.entries.iCake.t2.managers.UserManager;
 public class NoPowerTask extends BukkitRunnable {
 
     private Player player;
-    
+
     public NoPowerTask(Player player) {
         this.player = player;
     }
 
     public void run() {
         User user = UserManager.getUser(player);
-        
+
         if(GameState.getCurrentState() == GameState.STARTED) {
             if(user.getPower() <= 0) {
                 player.damage(1.0);
-                
+
                 player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 3, 1));
             } else {
-               this.cancel();
-               user.setNoPowerTask(null);
+                this.cancel();
+                user.setNoPowerTask(null);
             }
         } else {
             this.cancel();
             user.setNoPowerTask(null);
         }
     }
-    
+
 }

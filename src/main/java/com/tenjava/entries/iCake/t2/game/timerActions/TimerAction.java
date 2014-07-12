@@ -6,5 +6,5 @@ public interface TimerAction {
      * Do dat action.
      */
     public void doAction();
-    
+
 }

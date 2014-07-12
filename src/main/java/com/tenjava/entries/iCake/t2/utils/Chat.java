@@ -9,13 +9,13 @@ public class Chat {
     public static String color(String msg) {
         return ChatColor.translateAlternateColorCodes('&', msg);
     }
-    
+
     public static void sendMessage(CommandSender sender, String msg) {
         sender.sendMessage(color("&7" + msg));
     }
-    
+
     public static void broadcast(String msg) {
         Bukkit.broadcastMessage(color(msg));
     }
-    
+
 }

@@ -9,11 +9,11 @@ import com.tenjava.entries.iCake.t2.utils.Chat;
 public class GameLoop extends BukkitRunnable {
 
     private int time;
-    
+
     public GameLoop() {
         time = GameState.getCurrentState().getTimeForState();
     }
-    
+
     public void run() {
         if(time % 60 == 0 && time >= 60) {
             Bukkit.broadcastMessage(Chat.color(GameState.getCurrentState().getMessageToBroadcast(time)));
@@ -23,11 +23,11 @@ public class GameLoop extends BukkitRunnable {
             Bukkit.broadcastMessage(Chat.color(GameState.getCurrentState().getMessageToBroadcast(time)));
         } else if(time == 0) {
             Bukkit.broadcastMessage(Chat.color(GameState.getCurrentState().getCompleteMessage()));
-            
+
             GameState.getCurrentState().doAction();
             time = GameState.getCurrentState().getTimeForState();
         }
-        
+
         time--;
     }
 

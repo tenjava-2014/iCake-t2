@@ -12,17 +12,21 @@ public class EndingAction implements TimerAction {
 
     public void doAction() {
         for(Player player : WorldUtils.getCoreWorld().getPlayers()) {
-             player.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
-             
-             player.getInventory().clear();
-             player.getInventory().setArmorContents(null);
-             
-             UserManager.getUser(player).setPower(UserManager.MAX_POWER);
+            player.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
+
+            player.getInventory().clear();
+            player.getInventory().setArmorContents(null);
+
+            player.setFlying(false);
+            player.setAllowFlight(false);
+
+            UserManager.getUser(player).setPower(UserManager.MAX_POWER);
         }
-        
+
         WorldUtils.removeWorld();
-        
+
         new BukkitRunnable() {
+
             public void run() {
                 WorldUtils.createWorld();
             }

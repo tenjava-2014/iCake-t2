@@ -18,31 +18,33 @@ public class WorldUtils {
 
     public static String WORLD_NAME = "core_world";
     private static World coreWorld;
-    
+
     private static BukkitTask coreTask;
-    
-    public static World getCoreWorld() { return coreWorld; } //LOMBOK WOULD BE GREAT HERE.
-    
+
+    public static World getCoreWorld() {
+        return coreWorld;
+    }
+
     public static World createWorld() {
         Chat.broadcast("&e&oCreating world...");
-        
+
         WorldCreator creator = new WorldCreator(WORLD_NAME);
         creator.generateStructures(false);
-        
+
         World world = Bukkit.createWorld(creator);
         world.setAutoSave(false);
         world.setDifficulty(Difficulty.HARD);
-        
+
         return coreWorld = world;
     }
-    
+
     public static boolean removeWorld() {
         World world = Bukkit.getWorld(WORLD_NAME);
-        
+
         if(world != null) {
             final File folder = world.getWorldFolder();
             Bukkit.unloadWorld(world, true);
-            
+
             try {
                 FileUtils.deleteDirectory(folder);
             } catch(IOException e) {
@@ -51,16 +53,16 @@ public class WorldUtils {
                 Bukkit.getLogger().severe("----------[ error has end ] ---------------------");
             }
         }
-        
+
         if(coreTask != null) {
             coreTask.cancel();
             coreTask = null;
         }
-        
+
         coreWorld = null;
         return false;
     }
-    
+
     public static void spawnCore() {
         if(coreTask != null) {
             coreTask.cancel();
@@ -74,18 +76,18 @@ public class WorldUtils {
                 player.playSound(player.getEyeLocation(), Sound.ZOMBIE_METAL, 2f, -1f);
             }
         }
-        
+
         Location coreCentral = new Location(coreWorld, Utils.getRandom().nextBoolean() ? -getCentral(50, 200) : getCentral(50, 200), 0, Utils.getRandom().nextBoolean() ? -getCentral(50, 200) : getCentral(50, 200));
         coreCentral.setY(coreWorld.getHighestBlockYAt(coreCentral) + 10);
 
         Chat.broadcast("");
         Chat.broadcast("&9&nThe CORE has spawned! (X:" + coreCentral.getBlockX() + ", Z:" + coreCentral.getBlockZ() + ")");
-        
+
         coreTask = new CoreTask(coreCentral).runTaskTimer(TenJava.getInstance(), 20 * 5, 1);
     }
-    
+
     private static int getCentral(int low, int high) {
         return Utils.getRandom().nextInt(high - low) + low;
     }
-    
+
 }
