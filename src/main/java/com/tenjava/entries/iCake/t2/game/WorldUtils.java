@@ -15,7 +15,7 @@ import com.tenjava.entries.iCake.t2.timers.CoreTask;
 
 public class WorldUtils {
 
-    private static String WORLD_NAME = "core_world";
+    public static String WORLD_NAME = "core_world";
     private static World coreWorld;
     
     private static BukkitTask coreTask;

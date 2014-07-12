@@ -11,12 +11,15 @@ public class WaitingAction implements TimerAction {
 
     public void doAction() {
         World world = WorldUtils.getCoreWorld();
-        world.setSpawnLocation(0, 150, 0);
+        world.setSpawnLocation(0, world.getHighestBlockYAt(world.getSpawnLocation()) + 2, 0);
         
         for(Player player : Bukkit.getOnlinePlayers()) {
             if(player.getGameMode() != GameMode.CREATIVE) {
                 player.getInventory().clear();
                 player.getInventory().setArmorContents(null);
+                
+                player.setNoDamageTicks(20 * 3);
+                player.setFallDistance(-3f);
                 
                 player.setHealth(player.getMaxHealth());
                 player.setFoodLevel(20);

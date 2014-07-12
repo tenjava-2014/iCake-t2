@@ -35,17 +35,6 @@ public class CoreTask extends BukkitRunnable {
                     block.setDropItem(false);
                 }
             }
-            
-            if(Utils.getRandom().nextInt(10) == 2) {
-                for(int loop = 0; loop < 2; loop++) {
-                    for(int i = 0; i < 3; i++) {
-                        @SuppressWarnings("deprecation") FallingBlock block = coreCentral.getWorld().spawnFallingBlock(coreCentral, Material.TNT, (byte)0);
-                        block.setVelocity(getRandomVector().multiply(3));
-                        block.setMetadata("core-tnt", new FixedMetadataValue(TenJava.getInstance(), true));
-                        block.setDropItem(false);
-                    }
-                }
-            }
         }
         
         tick++;
